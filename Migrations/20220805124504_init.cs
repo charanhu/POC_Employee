@@ -43,6 +43,12 @@ namespace POC_Employee.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Department",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -59,15 +65,20 @@ namespace POC_Employee.Migrations
                     { 7, "Banking & Finance Services" },
                     { 8, "Retail & Logistics" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_DepartmentId",
+                table: "Employees",
+                column: "DepartmentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Department");
+                name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "Department");
         }
     }
 }

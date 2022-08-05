@@ -1,4 +1,6 @@
-﻿namespace POC_Employee.Data
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace POC_Employee.Data
 {
     public class Employees
     {
@@ -13,6 +15,8 @@
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public decimal Salary { get; set; }
+        [ForeignKey("Department")]
         public int DepartmentId { get; set; }
+        public Department Department { get; set; }
     }
 }

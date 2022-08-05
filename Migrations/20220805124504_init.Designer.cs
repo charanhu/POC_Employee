@@ -12,7 +12,7 @@ using POC_Employee.Data;
 namespace POC_Employee.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220805120626_init")]
+    [Migration("20220805124504_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,7 +134,20 @@ namespace POC_Employee.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentId");
+
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("POC_Employee.Data.Employees", b =>
+                {
+                    b.HasOne("POC_Employee.Data.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
                 });
 #pragma warning restore 612, 618
         }
