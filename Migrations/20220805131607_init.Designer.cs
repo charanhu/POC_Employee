@@ -12,7 +12,7 @@ using POC_Employee.Data;
 namespace POC_Employee.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220805124504_init")]
+    [Migration("20220805131607_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

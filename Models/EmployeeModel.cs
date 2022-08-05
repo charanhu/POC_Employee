@@ -18,6 +18,5 @@ namespace POC_Employee.Models
         public decimal Salary { get; set; }
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
-        public Department Department { get; set; }
     }
 }
