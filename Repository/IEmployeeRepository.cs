@@ -7,5 +7,6 @@ namespace POC_Employee.Repository
         Task<List<EmployeeModel>> GetAllEmployeesAsync();
         Task<EmployeeModel> GetEmployeeByIdAsync(int employeeId);
         Task<int> AddEmployeeAsync(EmployeeModel employeeModel);
+        Task UpdateEmployeeAsync(int employeeId, EmployeeModel employeeModel);
     }
 }

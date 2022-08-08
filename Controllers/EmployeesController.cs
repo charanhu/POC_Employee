@@ -33,5 +33,11 @@ namespace POC_Employee.Controllers
             var id = await _employeeRepository.AddEmployeeAsync(employeeModel);
             return CreatedAtAction(nameof(GetEmployeeById), new {id=id, controller="employees"}, id);
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEmployee([FromRoute] int id, [FromBody] EmployeeModel employeeModel)
+        {
+            await _employeeRepository.UpdateEmployeeAsync(id, employeeModel);
+            return Ok();
+        }
     }
 }

@@ -70,5 +70,42 @@ namespace POC_Employee.Repository
             await _context.SaveChangesAsync();
             return employee.Id;
         }
+        public async Task UpdateEmployeeAsync(int employeeId, EmployeeModel employeeModel)
+        {
+            //var employee = await _context.Employees.FindAsync(employeeId);
+            //if(employee != null)
+            //{
+            //    employee.FirstName=employeeModel.FirstName;
+            //    employee.LastName=employeeModel.LastName;
+            //    employee.DateOfBirth=employeeModel.DateOfBirth;
+            //    employee.Address=employeeModel.Address;
+            //    employee.City=employeeModel.City;
+            //    employee.StateCode=employeeModel.StateCode;
+            //    employee.ZipCode=employeeModel.ZipCode;
+            //    employee.PhoneNumber=employeeModel.PhoneNumber;
+            //    employee.Email=employeeModel.Email;
+            //    employee.Salary=employeeModel.Salary;
+            //    employee.DepartmentId=employeeModel.DepartmentId;
+
+            //    await _context.SaveChangesAsync();
+            //}
+            var employee = new Employees()
+            {
+                Id = employeeId,
+                FirstName = employeeModel.FirstName,
+                LastName = employeeModel.LastName,
+                DateOfBirth = employeeModel.DateOfBirth,
+                Address = employeeModel.Address,
+                City = employeeModel.City,
+                StateCode = employeeModel.StateCode,
+                ZipCode = employeeModel.ZipCode,
+                PhoneNumber = employeeModel.PhoneNumber,
+                Email = employeeModel.Email,
+                Salary = employeeModel.Salary,
+                DepartmentId = employeeModel.DepartmentId
+            };
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
+        }
     }
 }
