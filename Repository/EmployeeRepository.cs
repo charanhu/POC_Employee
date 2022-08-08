@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 using POC_Employee.Data;
 using POC_Employee.Models;
 
@@ -89,6 +90,9 @@ namespace POC_Employee.Repository
 
             //    await _context.SaveChangesAsync();
             //}
+            // the above code hits database two times
+
+
             var employee = new Employees()
             {
                 Id = employeeId,
@@ -107,5 +111,21 @@ namespace POC_Employee.Repository
             _context.Employees.Update(employee);
             await _context.SaveChangesAsync();
         }
+        public async Task UpdateEmployeePatchAsync(int employeeId, JsonPatchDocument employeeModel)
+        {
+            var employee = await _context.Employees.FindAsync(employeeId);
+            if(employee!= null)
+            {
+                employeeModel.ApplyTo(employee);
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task DeleteEmployeeAsync(int employeeId)
+        {
+            var employee = new Employees() { Id = employeeId };
+            _context.Employees.Remove(employee);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

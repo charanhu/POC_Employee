@@ -1,4 +1,5 @@
-﻿using POC_Employee.Models;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using POC_Employee.Models;
 
 namespace POC_Employee.Repository
 {
@@ -8,5 +9,7 @@ namespace POC_Employee.Repository
         Task<EmployeeModel> GetEmployeeByIdAsync(int employeeId);
         Task<int> AddEmployeeAsync(EmployeeModel employeeModel);
         Task UpdateEmployeeAsync(int employeeId, EmployeeModel employeeModel);
+        Task UpdateEmployeePatchAsync(int employeeId, JsonPatchDocument employeeModel);
+        Task DeleteEmployeeAsync(int employeeId);
     }
 }

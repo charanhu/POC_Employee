@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using POC_Employee.Models;
 using POC_Employee.Repository;
@@ -37,6 +38,18 @@ namespace POC_Employee.Controllers
         public async Task<IActionResult> UpdateEmployee([FromRoute] int id, [FromBody] EmployeeModel employeeModel)
         {
             await _employeeRepository.UpdateEmployeeAsync(id, employeeModel);
+            return Ok();
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateEmployeePatch([FromRoute] int id, [FromBody] JsonPatchDocument employeeModel)
+        {
+            await _employeeRepository.UpdateEmployeePatchAsync(id, employeeModel);
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteeEmployee([FromRoute] int id)
+        {
+            await _employeeRepository.DeleteEmployeeAsync(id);
             return Ok();
         }
     }
