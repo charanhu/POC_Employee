@@ -45,21 +45,26 @@ namespace POC_Employee.Repository
         }
         public async Task<int> AddEmployeeAsync(EmployeeModel employeeModel)
         {
-            var employee = new Employees()
-            {
-                FirstName = employeeModel.FirstName,
-                LastName = employeeModel.LastName,
-                DateOfBirth = employeeModel.DateOfBirth,
-                Address = employeeModel.Address,
-                City = employeeModel.City,
-                StateCode = employeeModel.StateCode,
-                ZipCode = employeeModel.ZipCode,
-                PhoneNumber = employeeModel.PhoneNumber,
-                Email = employeeModel.Email,
-                Salary = employeeModel.Salary,
-                DepartmentId = employeeModel.DepartmentId
-            };
-            _context.Employees.Add(employee);
+            //var employee = new Employees()
+            //{
+            //    FirstName = employeeModel.FirstName,
+            //    LastName = employeeModel.LastName,
+            //    DateOfBirth = employeeModel.DateOfBirth,
+            //    Address = employeeModel.Address,
+            //    City = employeeModel.City,
+            //    StateCode = employeeModel.StateCode,
+            //    ZipCode = employeeModel.ZipCode,
+            //    PhoneNumber = employeeModel.PhoneNumber,
+            //    Email = employeeModel.Email,
+            //    Salary = employeeModel.Salary,
+            //    DepartmentId = employeeModel.DepartmentId
+            //};
+            //_context.Employees.Add(employee);
+            //await _context.SaveChangesAsync();
+            //return employee.Id;
+
+            var employee = _mapper.Map<Employees>(employeeModel);
+            _context.Employees.Add(employee); 
             await _context.SaveChangesAsync();
             return employee.Id;
         }

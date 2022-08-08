@@ -16,7 +16,7 @@ namespace POC_Employee.Controllers
         {
             _employeeRepository = employeeRepository;
         }
-        [HttpGet("")]
+        [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
             var employees = await _employeeRepository.GetAllEmployeesAsync();
@@ -28,7 +28,7 @@ namespace POC_Employee.Controllers
             var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
             return Ok(employee);
         }
-        [HttpPost("")]
+        [HttpPost]
         public async Task<IActionResult> AddNewEmployee([FromBody]EmployeeModel employeeModel)
         {
             var id = await _employeeRepository.AddEmployeeAsync(employeeModel);

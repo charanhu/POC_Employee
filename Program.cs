@@ -23,6 +23,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+var scope = app.Services.CreateScope();
+var data = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+data.Database.EnsureCreated();  
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

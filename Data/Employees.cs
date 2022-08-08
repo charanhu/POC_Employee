@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace POC_Employee.Data
 {
+    [Table("Employees")]
     public class Employees
     {
+        [Key]
         public int Id { get; set; }
         [MaxLength(30)]
         public string FirstName { get; set; }
