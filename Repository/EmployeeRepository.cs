@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using POC_Employee.Data;
 using POC_Employee.Models;
@@ -8,48 +9,39 @@ namespace POC_Employee.Repository
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public EmployeeRepository(AppDbContext context)
+        public EmployeeRepository(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<List<EmployeeModel>> GetAllEmployeesAsync()
         {
-            var records = await _context.Employees.Select(x=> new EmployeeModel()
-            {
-                Id = x.Id,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                DateOfBirth = x.DateOfBirth,
-                Address = x.Address,
-                City = x.City,
-                StateCode = x.StateCode,
-                ZipCode = x.ZipCode,
-                PhoneNumber = x.PhoneNumber,
-                Email = x.Email,
-                Salary = x.Salary,  
-                DepartmentId = x.DepartmentId
-            }).ToListAsync();
-            return records;
+            var records = await _context.Employees.ToListAsync();
+            return _mapper.Map<List<EmployeeModel>>(records);
         }
         public async Task<EmployeeModel> GetEmployeeByIdAsync(int employeeId)
         {
-            var records = await _context.Employees.Where(x => x.Id == employeeId).Select(x => new EmployeeModel()
-            {
-                Id = x.Id,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                DateOfBirth = x.DateOfBirth,
-                Address = x.Address,
-                City = x.City,
-                StateCode = x.StateCode,
-                ZipCode = x.ZipCode,
-                PhoneNumber = x.PhoneNumber,
-                Email = x.Email,
-                Salary = x.Salary,
-                DepartmentId = x.DepartmentId
-            }).FirstOrDefaultAsync();
-            return records;
+            //var records = await _context.Employees.Where(x => x.Id == employeeId).Select(x => new EmployeeModel()
+            //{
+            //    Id = x.Id,
+            //    FirstName = x.FirstName,
+            //    LastName = x.LastName,
+            //    DateOfBirth = x.DateOfBirth,
+            //    Address = x.Address,
+            //    City = x.City,
+            //    StateCode = x.StateCode,
+            //    ZipCode = x.ZipCode,
+            //    PhoneNumber = x.PhoneNumber,
+            //    Email = x.Email,
+            //    Salary = x.Salary,
+            //    DepartmentId = x.DepartmentId
+            //}).FirstOrDefaultAsync();
+            //return records;
+
+            var employee = await _context.Employees.FindAsync(employeeId);
+            return _mapper.Map<EmployeeModel>(employee);
         }
         public async Task<int> AddEmployeeAsync(EmployeeModel employeeModel)
         {
