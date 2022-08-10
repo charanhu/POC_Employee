@@ -18,6 +18,7 @@ namespace POC_Employee.Repository
         }
         public async Task<List<EmployeeModel>> GetAllEmployeesAsync()
         {
+            // get all employees with automapper
             var records = await _context.Employees.ToListAsync();
             return _mapper.Map<List<EmployeeModel>>(records);
         }
@@ -63,8 +64,9 @@ namespace POC_Employee.Repository
             //await _context.SaveChangesAsync();
             //return employee.Id;
 
+            // add employees with auto mapper
             var employee = _mapper.Map<Employees>(employeeModel);
-            _context.Employees.Add(employee); 
+            _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
             return employee.Id;
         }
@@ -90,22 +92,27 @@ namespace POC_Employee.Repository
             // the above code hits database two times
 
 
-            var employee = new Employees()
-            {
-                Id = employeeId,
-                FirstName = employeeModel.FirstName,
-                LastName = employeeModel.LastName,
-                DateOfBirth = employeeModel.DateOfBirth,
-                Address = employeeModel.Address,
-                City = employeeModel.City,
-                StateCode = employeeModel.StateCode,
-                ZipCode = employeeModel.ZipCode,
-                PhoneNumber = employeeModel.PhoneNumber,
-                Email = employeeModel.Email,
-                Salary = employeeModel.Salary,
-                DepartmentId = employeeModel.DepartmentId
-            };
-            _context.Employees.Update(employee);
+            //var employee = new Employees()
+            //{
+            //    Id = employeeId,
+            //    FirstName = employeeModel.FirstName,
+            //    LastName = employeeModel.LastName,
+            //    DateOfBirth = employeeModel.DateOfBirth,
+            //    Address = employeeModel.Address,
+            //    City = employeeModel.City,
+            //    StateCode = employeeModel.StateCode,
+            //    ZipCode = employeeModel.ZipCode,
+            //    PhoneNumber = employeeModel.PhoneNumber,
+            //    Email = employeeModel.Email,
+            //    Salary = employeeModel.Salary,
+            //    DepartmentId = employeeModel.DepartmentId
+            //};
+            //_context.Employees.Update(employee);
+            //await _context.SaveChangesAsync();
+
+            //update employees with automapper
+            var employee = await _context.Employees.FindAsync(employeeId);
+            _mapper.Map(employeeModel, employee);
             await _context.SaveChangesAsync();
         }
         public async Task UpdateEmployeePatchAsync(int employeeId, JsonPatchDocument employeeModel)

@@ -16,41 +16,95 @@ namespace POC_Employee.Controllers
         {
             _employeeRepository = employeeRepository;
         }
+        
+        // Get All employees
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
-            var employees = await _employeeRepository.GetAllEmployeesAsync();
-            return Ok(employees);
+            try
+            {
+                var employees = await _employeeRepository.GetAllEmployeesAsync();
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+        // Get employees by ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeById([FromRoute]int id)
         {
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
-            return Ok(employee);
+            try
+            {
+                var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
+                return Ok(employee);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+        // Add new Employee
         [HttpPost]
         public async Task<IActionResult> AddNewEmployee([FromBody]EmployeeModel employeeModel)
         {
-            var id = await _employeeRepository.AddEmployeeAsync(employeeModel);
-            return CreatedAtAction(nameof(GetEmployeeById), new {id=id, controller="employees"}, id);
+            try
+            {
+                var id = await _employeeRepository.AddEmployeeAsync(employeeModel);
+                return CreatedAtAction(nameof(GetEmployeeById), new { id = id, controller = "employees" }, id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+        // Update Employee
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmployee([FromRoute] int id, [FromBody] EmployeeModel employeeModel)
         {
-            await _employeeRepository.UpdateEmployeeAsync(id, employeeModel);
-            return Ok();
+            try
+            {
+                await _employeeRepository.UpdateEmployeeAsync(id, employeeModel);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+        // Update patch
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateEmployeePatch([FromRoute] int id, [FromBody] JsonPatchDocument employeeModel)
         {
-            await _employeeRepository.UpdateEmployeePatchAsync(id, employeeModel);
-            return Ok();
+            try
+            {
+                await _employeeRepository.UpdateEmployeePatchAsync(id, employeeModel);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+        // Delete Employee
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteeEmployee([FromRoute] int id)
         {
-            await _employeeRepository.DeleteEmployeeAsync(id);
-            return Ok();
+            try
+            {
+                await _employeeRepository.DeleteEmployeeAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
